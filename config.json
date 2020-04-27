@@ -1,0 +1,358 @@
+{
+    "Angel Island SP": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Arroyo Seco (Los Padres)": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/231958/availability"
+    },
+    "Bicentenniel (Marin Headlands)": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/272229/availability"
+    },
+    "Big Basin": {
+        "tags": [
+            "weekend",
+            "big_basin"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Cedar Bluff (Bass Lake)": {
+        "tags": [
+            "bass_lake"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232912/availability"
+    },
+    "China Camp SP": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Crane Flat (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232452/availability"
+    },
+    "Demotte (NR Grand Canyon)": {
+        "tags": [
+            "utah",
+            "grand_canyon",
+            "north_rim"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/234722/availability"
+    },
+    "Devil's Garden Campground (Arches)": {
+        "tags": [
+            "utah",
+            "arches"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/234059/availability"
+    },
+    "Dimond O (Hetch Hetchy)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/233772/availability"
+    },
+    "Forks Campground (Bass Lake)": {
+        "tags": [
+            "bass_lake"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232878/availability"
+    },
+    "Fruita Campground (Capitol Reef)": {
+        "tags": [
+            "utah",
+            "capitol_reef"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/272245/availability"
+    },
+    "Grizzly Creek Redwoods SP": {
+        "tags": [
+            "northern_cal"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Half Moon Bay SB": {
+        "tags": [
+            "weekend",
+            "beach",
+            "hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Henry Cowell Redwoods": {
+        "tags": [
+            "weekend",
+            "santa_cruz"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Hodgdon Meadows (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232451/availability"
+    },
+    "Humboldt Redwoods SP": {
+        "tags": [
+            "northern_cal"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Kirby Cove (SF)": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232491/availability"
+    },
+    "Kirk Creek Campground(Big Sur)": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/233116/availability"
+    },
+    "Limekiln SP": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Little Basin": {
+        "tags": [
+            "weekend",
+            "big_basin"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Lower Pines (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232450/availability"
+    },
+    "Mackerricher SP": {
+        "tags": [
+            "northern_cal",
+            "hwy1",
+            "north_hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Manresa SB": {
+        "tags": [
+            "weekend",
+            "beach",
+            "santa_cruz",
+            "hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Mather's Campground (Grand Canyon)": {
+        "tags": [
+            "utah",
+            "grand_canyon",
+            "south_rim"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232490/availability"
+    },
+    "Mount Tamalpais SP": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Needles District (Canyonlands)": {
+        "tags": [
+            "utah",
+            "canyonlands"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/251535/availability"
+    },
+    "North Pines (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232449/availability"
+    },
+    "North Rim Campground (Grand Canyon)": {
+        "tags": [
+            "utah",
+            "grand_canyon",
+            "north_rim"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232489/availability"
+    },
+    "Patricks Point SP": {
+        "tags": [
+            "northern_cal",
+            "hwy1",
+            "north_hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Pfeiffer": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Pfeiffer Big Sur": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Plaskett Creek Campground(Big Sur)": {
+        "tags": [
+            "weekend",
+            "big_sur"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/231959/availability"
+    },
+    "Point Reyes": {
+        "tags": [
+            "weekend",
+            "point_reyes",
+            "north_bay"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/233359/availability"
+    },
+    "Prairie Creek Redwoods SP Elk": {
+        "tags": [
+            "northern_cal",
+            "hwy1",
+            "north_hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Prairie Creek Redwoods SP Gold": {
+        "tags": [
+            "northern_cal",
+            "hwy1",
+            "north_hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Russian Gulch": {
+        "tags": [
+            "beach",
+            "hwy1",
+            "north_hwy1",
+            "rg"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Samuel P. Taylor SP": {
+        "tags": [
+            "weekend",
+            "north_bay"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Seacliff SB": {
+        "tags": [
+            "weekend",
+            "beach",
+            "santa_cruz",
+            "hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "South Campground (Zion)": {
+        "tags": [
+            "utah",
+            "zion"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/272266/availability"
+    },
+    "Spring Cover (Bass Lake)": {
+        "tags": [
+            "bass_lake"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232801/availability"
+    },
+    "Sunset SB": {
+        "tags": [
+            "weekend",
+            "beach",
+            "santa_cruz",
+            "hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Ten-X Campground (Grand Canyon)": {
+        "tags": [
+            "utah",
+            "grand_canyon",
+            "north_rim"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/234488/availability"
+    },
+    "Tuolomne Meadows (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232448/availability"
+    },
+    "Upper Pines (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232447/availability"
+    },
+    "Van Damme": {
+        "tags": [
+            "northern_cal",
+            "hwy1",
+            "north_hwy1"
+        ],
+        "url": "https://www.reservecalifornia.com/CaliforniaWebHome/"
+    },
+    "Watchman's Campground (Zion)": {
+        "tags": [
+            "utah",
+            "zion"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232445/availability"
+    },
+    "Wawona (Yosemite)": {
+        "tags": [
+            "yosemite",
+            "weekend"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232446/availability"
+    },
+    "Wishon Point (Bass Lake)": {
+        "tags": [
+            "bass_lake"
+        ],
+        "url": "https://www.recreation.gov/camping/campgrounds/232911/availability"
+    }
+}
