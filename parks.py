@@ -10,7 +10,7 @@ import re
 import time
 
 from functools import wraps
-from itertools import chain
+from itertools import repeat
 from collections import defaultdict
 
 import pandas as pd
@@ -52,8 +52,8 @@ ALL_SITES_DICT = {
     # "Mount Tamalpais SP": {"url": CALIFORNIA_URL, "tags": ["weekend", "north_bay"]},
     # "Angel Island SP": {"url": CALIFORNIA_URL, "tags": ["weekend", "north_bay"]},
     # "Henry Cowell Redwoods": {"url": CALIFORNIA_URL, "tags": ["weekend", "santa_cruz"]},
-    "Plaskett Creek Campground (Big Sur)": {"url": NATIONAL_URL_TEMPLATE.format(231959), "tags": ["weekend", "big_sur"]},
-    "Kirk Creek Campground (Big Sur)": {"url": NATIONAL_URL_TEMPLATE.format(233116), "tags": ["weekend", "big_sur"]},
+    "Plaskett Creek Campground(Big Sur)": {"url": NATIONAL_URL_TEMPLATE.format(231959), "tags": ["weekend", "big_sur"]},
+    "Kirk Creek Campground(Big Sur)": {"url": NATIONAL_URL_TEMPLATE.format(233116), "tags": ["weekend", "big_sur"]},
     # "Limekiln SP": {"url": CALIFORNIA_URL, "tags": ["weekend", "big_sur"]},
     # "Pfeiffer": {"url": CALIFORNIA_URL, "tags": ["weekend", "big_sur"]},
     # "Pfeiffer Big Sur": {"url": CALIFORNIA_URL, "tags": ["weekend", "big_sur"]},
@@ -78,12 +78,6 @@ ALL_SITES_DICT = {
     # "Humboldt Redwoods SP": {"url": CALIFORNIA_URL, "tags": ["northern_cal"]},
 }
 
-ALL_TAGS = set(chain(*(site['tags'] for site in ALL_SITES_DICT.values())))
-TAG_TO_SITES = defaultdict(list)
-for site, data in ALL_SITES_DICT.items():
-    for tag in data['tags']:
-        TAG_TO_SITES[tag].append(site)
-
 OUTPUT_FILE = "availability_{}_{}_to_{}.txt"
 
 # Recreation.gov variables
@@ -105,23 +99,56 @@ SECOND_SEND_BUTTON_XPATH = '//*[@id="divPlaceSearchParameter"]/div/div[2]/div[1]
 SECOND_AVAILABILITY_ROW_PATH = '//*[@id="divUnitGridlist"]/div/table/tbody/tr'
 
 YEAR = 2020
-WEEKDAYS_DICT = {"saturday": 5,
-                 "sunday": 6,
-                 "monday": 0,
-                 "tuesday": 1,
-                 "wednesday": 2,
-                 "thursday": 3,
-                 "friday": 4}
+
+
+def retry(exception_to_check, tries=2, delay=.2, dont_raise_error=False):
+    """Retry calling the function if there is an error.
+
+    Args:
+        exception_to_check(Exception): the exception or tuple of them to check
+        tries (int): number of times to try (not retry) before giving up
+        delay (float): initial delay between retries in seconds
+        dont_raise_error(bool): don't raise final_error
+    """
+    def deco_retry(func):
+        @wraps(func)
+        def func_retry(*args, **kwargs):
+            for _ in range(tries - 1):
+                try:
+                    return func(*args, **kwargs)
+                except exception_to_check:
+                    msg = "Warning: %s. Retrying..." % (str(e))
+                    print(msg)
+                    time.sleep(delay)
+            try:
+                return func(*args, **kwargs)
+            except exception_to_check as err:
+                if dont_raise_error:
+                    msg = "Warning: %s. Not retrying." % (str(err))
+                    print(msg)
+                else:
+                    raise err
+
+        return func_retry  # true decorator
+
+    return deco_retry
 
 
 def _get_date_list(start, end=None, weekday=None):
+    weekdays_dict = {"saturday": 5,
+                     "sunday": 6,
+                     "monday": 0,
+                     "tuesday": 1,
+                     "wednesday": 2,
+                     "thursday": 3,
+                     "friday": 4}
     delta = 1
     day = start
     if end is None:
         end = start
     if weekday:
         if weekday.lower() not in weekdays_dict:
-            raise ValueError(f"weekday {weekday} is not recognized. "
+            raise ValueError(f"weekday {weekday} is not recognized. " 
                              f"Possible: {weekdays_dict.keys()}")
 
         day += datetime.timedelta(days=weekdays_dict[weekday.lower()] - day.weekday())
@@ -133,20 +160,51 @@ def _get_date_list(start, end=None, weekday=None):
         day += datetime.timedelta(days=delta)
     return dates
 
-def get_sites_dict_from_tag(tag=None):
-    if tag is None:
-        return ALL_SITES_DICT
-    else:
-        return {k: v for k, v in ALL_SITES_DICT
-                if k in TAG_TO_SITES[tag]}
 
-def check_date_range(start_date, end_date, tag=None, output_file=None, weekday=None):
+def get_valid_tags():
+    tags = []
+    for _, value in ALL_SITES_DICT.items():
+        tags += value["tags"]
+    return list(set(tags))
+
+
+def get_sites_dict_from_tag(tag):
+    sites_dict = {}
+    for site, value in ALL_SITES_DICT.items():
+        if tag in value['tags']:
+            sites_dict[site] = value["url"]
+    return sites_dict
+
+
+def get_sites_dict(tag, park):
+    if park:
+        if park not in ALL_SITES_DICT.keys():
+            raise ValueError(
+                "park {} not in parks. Closest match: {}".format(
+                    park, difflib.get_close_matches(
+                        park, ALL_SITES_DICT.keys())))
+        return {park: ALL_SITES_DICT[park]['url']}, park
+    valid_tags = get_valid_tags()
+    if tag not in valid_tags:
+        raise ValueError(
+            "tag {} not found. Closest match: {}".format(
+                tag, difflib.get_close_matches(
+                    tag, valid_tags)))
+    return get_sites_dict_from_tag(tag), tag
+
+
+def check_date_range(start_date, end_date, tag="yosemite", park=None, output_file=None, weekday=None):
     dates = _get_date_list(start_date, end_date, weekday)
-    sites_dict = get_sites_dict_from_tag(tag)
+    sites_dict, tag = get_sites_dict(tag, park)
     if not output_file:
         output_file = OUTPUT_FILE.format(tag, start_date, end_date)
     available = check_sites(dates, sites_dict)
     _print_to_file(available, output_file)
+
+
+def check_saturdays_in_range(start_date, end_date, tag="yosemite", park=None, output_file=None):
+    check_date_range(start_date, end_date, tag, park, output_file, weekday="saturday")
+
 
 def check_sites(dates_list, sites_dict):
     start_time = time.time()
@@ -165,9 +223,13 @@ def _subprocess_check_site(name, url, dates_list):
     driver = webdriver.Chrome()
     date_availability = defaultdict(list)
     try:
-        driver.get(url)
-        # should do same thing for _check_california_sites
-        date_availability = _check_gov_sites(driver, name, dates_list)
+        if "recreation" in url:
+            driver.get(url)
+            date_availability = _check_gov_sites(driver, name, dates_list)
+        else:
+            for date in dates_list:
+                driver.get(url)
+                date_availability = _check_california_sites(driver, name, date)
     except Exception:
         pass
     finally:
@@ -200,6 +262,7 @@ def _check_california_sites(driver, name, date, available_sites):
         driver, name, date, available_sites)
 
 
+@retry(Exception)
 def _enter_value(driver, field_id, value, scroll_into_view=False, select_on_dropdown=False):
     field = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, field_id)))
     if scroll_into_view:
@@ -217,6 +280,7 @@ def _enter_value(driver, field_id, value, scroll_into_view=False, select_on_drop
     body.click()
 
 
+@retry(Exception)
 def _select_dropdown_visible_text(driver, field_id, value):
     menu = WebDriverWait(driver, 3).until(
         EC.presence_of_element_located((By.ID, field_id)))
@@ -224,6 +288,7 @@ def _select_dropdown_visible_text(driver, field_id, value):
     dropdown.select_by_visible_text(value)
 
 
+@retry(Exception)
 def _click_element(driver, xpath):
     elem = driver.find_element_by_xpath(xpath)
     driver.execute_script("arguments[0].scrollIntoView();", elem)
@@ -251,20 +316,13 @@ def _check_out_california_campsite_page(driver, name, date, available_sites):
 
 def _check_gov_sites(driver, name, dates_list):
     """Automation for checking the recreation.gov website."""
-    dates_to_process = set(dates_list)
     available_sites = defaultdict(list)
-    while dates_to_process:
-        date = dates_to_process.pop()
-        print(f'Processing {date} for {name}')
-        value = date + 10*keys.Keys.ARROW_LEFT + \
-                       12* keys.Keys.BACKSPACE + \
-                       keys.Keys.ARROW_DOWN
-        _enter_value(driver, DATE_PICKER_ID, value)
-        results = _get_available_sites_in_gov_table(driver, name)
-        for date in results.keys():
-            available_sites[date].append(name)
-            if date in dates_to_process:
-                dates_to_process.remove(date)
+    date = dates_list[0]
+    value = date + 10*keys.Keys.ARROW_LEFT + 12* keys.Keys.BACKSPACE + keys.Keys.ARROW_DOWN
+    _enter_value(driver, DATE_PICKER_ID, value)
+    results = _get_available_sites_in_gov_table(driver, name)
+    for date in results.keys():
+        available_sites[date].append(name)
     return available_sites
 
 
@@ -308,7 +366,7 @@ def get_date_from_col(column):
     return datetime.date(2020, m, d)
 
 def _get_available_sites_in_gov_table(driver, name):
-    time.sleep(1)
+    time.sleep(2)
     tab = driver.find_element_by_id('availability-table')
     tab_html = tab.get_attribute('outerHTML')
     df = pd.read_html(tab_html)[0]
@@ -333,15 +391,14 @@ def _print_to_file(available_sites_dict, output_file=OUTPUT_FILE):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--start', required=True)
-    parser.add_argument('-e', '--end')
-    parser.add_argument('-w', '--weekday', choices=WEEKDAYS_DICT)
-    parser.add_argument('-t', '--tag', choices=ALL_TAGS)
+    parser.add_argument('-s', '--start', help='start date', required=True)
+    parser.add_argument('-e', '--end', help='end date')
 
     args = parser.parse_args()
+    # (start_date, end_date, tag="yosemite", park=None, output_file=None, weekday=None):
     start = datetime.datetime.strptime(args.start, "%Y-%m-%d").date()
     if args.end is not None:
         end = datetime.datetime.strptime(args.end, "%Y-%m-%d").date()
     else:
         end = start
-    check_date_range(start, end, weekday=args.weekday, tag=args.tag)
+    check_date_range(start, end)
